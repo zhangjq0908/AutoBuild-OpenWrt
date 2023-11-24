@@ -1,0 +1,88 @@
+name: Build_Chromium
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+              build-essential \
+              clang \
+              cmake \
+              ninja-build \
+              python3 \
+              python3-pip \
+              curl \
+              git
+
+      - name: Fetch Chromium Source
+        run: |
+          git clone --depth 1 https://chromium.googlesource.com/chromium/src.git
+
+      - name: Install Chromium Dependencies
+        run: |
+          cd src
+          ./build/install-build-deps.sh --no-arm --no-nacl
+
+      - name: Configure and Build Chromium
+        run: |
+          cd srcname: Build Chromium
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+              build-essential \
+              clang \
+              cmake \
+              ninja-build \
+              python3 \
+              python3-pip \
+              curl \
+              git
+
+      - name: Fetch Chromium Source
+        run: |
+          git clone --depth 1 https://chromium.googlesource.com/chromium/src.git
+
+      - name: Install Chromium Dependencies
+        run: |
+          cd src
+          ./build/install-build-deps.sh --no-arm --no-nacl
+
+      - name: Configure and Build Chromium
+        run: |
+          cd src
+          gn gen out/Default
+          ninja -C out/Default chrome
+
+      # 这个示例提供了一个基本的构建流程，实际上可能需要更多设置和命令来完成整个构建过程
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: chromium-apk
+          path: src/out/
