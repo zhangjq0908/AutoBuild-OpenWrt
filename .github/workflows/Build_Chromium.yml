@@ -39,8 +39,3 @@ jobs:
           cd src
           gn gen out/Default
           ninja -C out/Default chrome
-      - name: Upload APK
-        uses: actions/upload-artifact@v2
-        with:
-          name: chromium-apk
-          path: src/out/Default/
