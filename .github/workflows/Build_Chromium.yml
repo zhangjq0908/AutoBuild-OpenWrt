@@ -33,14 +33,14 @@ jobs:
         run: |
           cd src
           ./build/install-build-deps.sh --no-arm --no-nacl
-              - name: Upload APK
-        uses: actions/upload-artifact@v2
-        with:
-          name: chromium-apk
-          path: src/out/Default/  
-
+  
       - name: Configure and Build Chromium
         run: |
           cd src
           gn gen out/Default
           ninja -C out/Default chrome
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: chromium-apk
+          path: src/out/Default/  
