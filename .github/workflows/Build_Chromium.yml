@@ -37,7 +37,7 @@ jobs:
       - name: Configure and Build Chromium
         run: |
           cd src
-          gn gen out/Default
+          gn gen out/Default 
           ninja -C out/Default chrome
       - name: Upload APK
         uses: actions/upload-artifact@v2
